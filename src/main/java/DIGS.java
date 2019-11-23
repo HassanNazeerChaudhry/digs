@@ -1,12 +1,10 @@
-package digs;
+public class DIGS {
 
-public class Utility {
+    public boolean checkGlobalOptimal() {
+        return false;
+    }
 
-  public boolean checkGlobalOptimal() {
-      return false;
-  }
-
-  public boolean checkLocalOptimal() {
+    public boolean checkLocalOptimal() {
         return false;
     }
 
@@ -23,5 +21,4 @@ public class Utility {
     public void calGlobalOptimal(){
 
     }
-
 }
