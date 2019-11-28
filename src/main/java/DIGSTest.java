@@ -3,13 +3,14 @@ import java.util.Random;
 public class DIGSTest {
     public static void main(String[] args) {
 
+        DIGS dg=new DIGS();
         int paramSize=20; //Number of total constraints
         int constSize=5; // number of constraints
-        int [][] costMat = new int [5][20];
-        KeyValuePair [][] costMatSorted = new KeyValuePair [5][20];
+        int [][] costMat = new int [constSize][paramSize];
+        KeyValuePair [][] costMatSorted = new KeyValuePair [constSize][paramSize];
+        int gammaConst[]={41,32,53,61}; //Memory, Bandwidth, Processing, Storage
 
-
-    //Generates the Cost Matrix
+        //Generates the Cost Matrix
         System.out.print("Cost Matrix\n ");
         //Generating the cost matrix
         for(int i = 0; i < constSize; i++){
@@ -37,6 +38,10 @@ public class DIGSTest {
         System.out.print("Sorted Array\n ");
         costMatSorted=Utility.sortRowWise(costMatSorted);
         Utility.printKeyValMat(costMatSorted,constSize,paramSize);
+
+        System.out.print("Test Array\n ");
+       dg.onePassDIGS(costMatSorted);
+
 
     }
 }
