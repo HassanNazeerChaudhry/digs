@@ -36,7 +36,7 @@ public class DIGS {
                                                             //if(checkGlobalOptimal()) {
 
                                                                          //add to optimality list
-                                                                //}
+                                                           //}
 
 
                                         //}
@@ -45,13 +45,17 @@ public class DIGS {
 
 
 
-                        //}//end of if checking if local optimility is not violated
+                        //}//end of if checking if local optimality is not violated
 
                        System.out.print("("+row[j].getKey()+","+row[j].getValue()+") ");
 
 
                    }
-               System.out.println(" Sum --> " + sum);
+               System.out.print(" Sum --> " + sum+" Indexes--> ");
+                   for(int m=0;m<indexes.length;m++){
+                       System.out.print(indexes[m]+" ,");
+                   }
+                   System.out.println();
 
             }
 
