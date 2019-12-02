@@ -8,8 +8,9 @@ public class DIGSTest {
         int constSize=5; // number of constraints
         int [][] costMat = new int [constSize][paramSize];
 
+        KeyValuePair [][] costMatAugmented = new KeyValuePair [constSize][paramSize];
         KeyValuePair [][] costMatSorted = new KeyValuePair [constSize][paramSize];
-        int gammaConst[]={41,32,53,61,49}; //Memory, Bandwidth, Processing, Storage, Accuracy
+        int gammaConst[]={141,132,153,161,149}; //Memory, Bandwidth, Processing, Storage, Accuracy
 
         //Generates the Cost Matrix
         System.out.print("Cost Matrix\n ");
@@ -31,17 +32,19 @@ public class DIGSTest {
 
 
        //add Key with each value
-        costMatSorted=Utility.appendKey(costMat);
+        costMatAugmented=Utility.appendKey(costMat);
         System.out.print("Key Value Matrix \n ");
-        Utility.printKeyValMat(costMatSorted,constSize,paramSize);
+        Utility.printKeyValMat(costMatAugmented,constSize,paramSize);
+
 
         //sorted each row separately
         System.out.print("Sorted Array\n ");
-        costMatSorted=Utility.sortRowWise(costMatSorted);
+        costMatSorted=Utility.sortRowWise(costMatAugmented.clone());
         Utility.printKeyValMat(costMatSorted,constSize,paramSize);
 
+
         System.out.print("Test Array\n ");
-        dg.onePassDIGS(costMatSorted,gammaConst);
+        dg.onePassDIGS(costMatSorted,costMatAugmented,gammaConst);
 
 
     }
