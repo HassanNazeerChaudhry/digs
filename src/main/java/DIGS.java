@@ -87,15 +87,24 @@ public class DIGS {
 
 
        for(int i=0;i<indexes.length;i++){
+           System.out.println();
 
            for(int j=0;j<testRow.length;j++){
+
+
                if(testRow[j].getKey()==indexes[i])//skip the row from which the local constraint is taken
                {
+                   System.out.print("Index-->"+indexes[i]+" test row index-->"+testRow[j].getKey());
                    globalSum+=testRow[j].getValue();
+
+                   System.out.print(" global Constraint--> "+ gammaConst+" global sum--> "+ globalSum);
 
                }
 
+
            }
+
+           System.out.println();
 
            if(globalSum>gammaConst){
                isValid=false;
