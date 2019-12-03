@@ -19,8 +19,23 @@ public class DIGS {
                 int sum=0;
                 int indexes[]= new int[k+1];
 
-                  rowInd++; //update the row index
-                   for(int j=0;j<k+1;j++){
+                  rowInd++; //update the row  index
+
+               if(blockRow.contains(rowInd)){
+                   System.out.println("................ THIS ROW IS BLOCKED...................");
+               }
+
+
+               // the stop condition
+               if(blockRow.size()==AugumentedCostMat.length){
+                   System.out.println("................ GAME OVER...................");
+                   break;
+
+               }
+
+                if(!blockRow.contains(rowInd)){//check if the row is blocked
+
+                    for(int j=0;j<k+1;j++){
 
                        sum+=row[j].getValue();
                        indexes[j]=row[j].getKey();
@@ -61,11 +76,29 @@ public class DIGS {
 
 
                 }//end of if checking if local optimality is not violated
+                else{
+                    if(!blockRow.contains(rowInd)){
+                        blockRow.add(rowInd);
+                    }
+                }
 
+
+
+
+                if(blockRow.size()>0)
+                    System.out.println(" .............Blockrow ");
+
+                for(int j=0;j<blockRow.size();j++){
+                    System.out.print(" "+blockRow.get(j));
+                }
 
                 System.out.println();
 
+
                      System.out.println("<------------------------------------->");
+
+
+                       }//end of checking that if the row is blocked
 
                  }//inner row to select one row
             
