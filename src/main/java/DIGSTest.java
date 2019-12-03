@@ -10,7 +10,7 @@ public class DIGSTest {
 
         KeyValuePair [][] costMatAugmented = new KeyValuePair [constSize][paramSize];
         KeyValuePair [][] costMatSorted = new KeyValuePair [constSize][paramSize];
-        int gammaConst[]={141,132,153,161,149}; //Memory, Bandwidth, Processing, Storage, Accuracy
+        int gammaConst[]={90,32,53,61,49}; //Memory, Bandwidth, Processing, Storage, Accuracy
 
         //Generates the Cost Matrix
         System.out.print("Cost Matrix\n ");

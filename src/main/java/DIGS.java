@@ -6,7 +6,7 @@ import java.util.List;
 public class DIGS {
 
     List<Integer> blockRow=new ArrayList<>();
-    List<Integer> blockRowCol=new ArrayList<>();
+    List<RowCol> blockRowCol=new ArrayList<>();
 
     //do one pass of DIGS
     public void onePassDIGS(KeyValuePair [][] sortedCostMat,KeyValuePair [][] AugumentedCostMat, int gammaConst[]) {
@@ -62,12 +62,14 @@ public class DIGS {
                         //skip the testRow which doesn't match rowInd
                         if(!(rowIndTest==rowInd)){
                             // Check global constraint
-                            if(checkGlobalOptimal(indexes,testRow,gammaConst[rowIndTest])) {
+                            int checkInd =checkGlobalOptimal(indexes,rowIndTest,testRow,gammaConst[rowIndTest]);
+                            if(checkInd==-1) {//its true
 
                                 System.out.print(" GMATCHED ");
                             }
                             else{
-                                 System.out.print(" G-MISS-MATCHED");
+                                System.out.println(" The new row col pair is added to the blocked col-->"+ "  ("+rowInd+","+checkInd+")");
+                                blockRowCol.add(new RowCol(rowInd,checkInd));
                             }
 
                         }
@@ -112,7 +114,7 @@ public class DIGS {
     //check if a certain value is globally optimal or not
     //Input: indexes-->Indexes of current row, costMatSorted--> The entire cost matrix,  gammaConst--> matrix of constraints
     //Output: Returns true/false depending on if the global constraint is not violated
-    public boolean checkGlobalOptimal(int indexes[], KeyValuePair[] testRow,int gammaConst) {
+    public int checkGlobalOptimal(int indexes[], int colInd,  KeyValuePair[] testRow,int gammaConst) {
         //go through each index
         int globalSum=0;
         boolean isValid=false;
@@ -124,8 +126,10 @@ public class DIGS {
 
            for(int j=0;j<testRow.length;j++){
 
-
-               if(testRow[j].getKey()==indexes[i])//skip the row from which the local constraint is taken
+               // that col. is combination (row,col)
+             // This is the point where you check col. && ()
+               //if(check for if col and row constrain is not violated)
+               if(testRow[j].getKey()==indexes[i] && !blockRowCol.contains(new RowCol(testRow[j].getKey(),colInd)))//skip the row from which the local constraint is taken
                {
                    System.out.print("Index-->"+indexes[i]+" test row index-->"+testRow[j].getKey());
                    globalSum+=testRow[j].getValue();
@@ -140,18 +144,20 @@ public class DIGS {
            System.out.println();
 
            if(globalSum>gammaConst){
-               isValid=false;
-               break;
+
+              System.out.println(" ...............................................This index has failed-->"+indexes[i]);
+               return indexes[i];
+
            }
            else{
-               isValid=true;
+               return -1;
            }
 
 
         }
 
 
-       return isValid;
+       return -1;
     }
 
 
@@ -162,12 +168,6 @@ public class DIGS {
     public boolean checkLocalOptimal(int sum, int gamma) {
 
         return (gamma>sum);
-    }
-
-
-    //check if a certain value is blocked locally or not
-    public boolean isBlockedLocal( int rowInd, List<Integer> blockRow) {
-        return false;
     }
 
 
