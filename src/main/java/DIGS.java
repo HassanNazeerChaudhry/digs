@@ -37,10 +37,13 @@ public class DIGS {
 
                     for(int j=0;j<k+1;j++){
 
-                       sum+=row[j].getValue();
-                       indexes[j]=row[j].getKey();
 
-                       System.out.print(" ("+row[j].getKey()+","+row[j].getValue()+")");
+                       if(! Utility.isContainRowCol(blockRowCol, rowInd,  row[j].getKey()))//skip the element if it is blocked
+                      {
+                           sum+=row[j].getValue();
+                           indexes[j]=row[j].getKey();
+                            System.out.print(" ("+row[j].getKey()+","+row[j].getValue()+")");
+                      }
 
 
 
@@ -62,14 +65,20 @@ public class DIGS {
                         //skip the testRow which doesn't match rowInd
                         if(!(rowIndTest==rowInd)){
                             // Check global constraint
-                            int checkInd =checkGlobalOptimal(indexes,rowIndTest,testRow,gammaConst[rowIndTest]);
+                            int checkInd =checkGlobalOptimal(indexes,rowInd,testRow,gammaConst[rowIndTest]);
                             if(checkInd==-1) {//its true
 
                                 System.out.print(" GMATCHED ");
                             }
                             else{
-                                System.out.println(" The new row col pair is added to the blocked col-->"+ "  ("+rowInd+","+checkInd+")");
-                                blockRowCol.add(new RowCol(rowInd,checkInd));
+                                 blockRowCol.add(new RowCol(checkInd,rowInd));
+                                 System.out.println(" The new row col pair is added to the blocked col-->"+ "  ("+rowInd+","+checkInd+")");
+                                 for(int x=0;x<blockRowCol.size();x++){
+                                        System.out.print("("+blockRowCol.get(x).getRow()+","+blockRowCol.get(x).getCol()+")");
+                                 }
+                                    System.out.println();
+
+                                 break;
                             }
 
                         }
@@ -129,9 +138,12 @@ public class DIGS {
                // that col. is combination (row,col)
              // This is the point where you check col. && ()
                //if(check for if col and row constrain is not violated)
+
+
                if(testRow[j].getKey()==indexes[i] && !blockRowCol.contains(new RowCol(testRow[j].getKey(),colInd)))//skip the row from which the local constraint is taken
                {
-                   System.out.print("Index-->"+indexes[i]+" test row index-->"+testRow[j].getKey());
+                   System.out.print(" col--> "+testRow[j].getKey()+" row--> "+colInd+" true/false "+blockRowCol.contains(new RowCol(colInd,testRow[j].getKey())));
+                   System.out.print(" Index--> "+indexes[i]+" test row index-->" +testRow[j].getKey());
                    globalSum+=testRow[j].getValue();
 
                    System.out.print(" global Constraint--> "+ gammaConst+" global sum--> "+ globalSum);
@@ -145,7 +157,7 @@ public class DIGS {
 
            if(globalSum>gammaConst){
 
-              System.out.println(" ...............................................This index has failed-->"+indexes[i]);
+              System.out.println(" ......................This index has failed--> "+indexes[i]);
                return indexes[i];
 
            }

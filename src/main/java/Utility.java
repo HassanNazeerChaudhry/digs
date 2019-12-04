@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Utility {
 
 
@@ -58,6 +60,18 @@ public class Utility {
             }
 
     }
+
+    static public boolean isContainRowCol(List<RowCol> listRowCol, int row, int col){
+        for(int s=0;s<listRowCol.size();s++) {
+            if(listRowCol.get(s).getRow()==row && listRowCol.get(s).getCol()==col){
+               return true;
+            }
+        }
+
+        return false;
+
+    }
+
 
 
 }
