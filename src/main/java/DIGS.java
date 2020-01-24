@@ -140,7 +140,7 @@ public class DIGS {
                //if(check for if col and row constrain is not violated)
 
 
-               if(testRow[j].getKey()==indexes[i] && !blockRowCol.contains(new RowCol(testRow[j].getKey(),colInd)))//skip the row from which the local constraint is taken
+               if(testRow[j].getKey()==indexes[i] && !Utility.isContainRowCol(blockRowCol, colInd,  testRow[j].getKey()))//skip the row from which the local constraint is taken
                {
                    System.out.print(" col--> "+testRow[j].getKey()+" row--> "+colInd+" true/false "+blockRowCol.contains(new RowCol(colInd,testRow[j].getKey())));
                    System.out.print(" Index--> "+indexes[i]+" test row index-->" +testRow[j].getKey());
